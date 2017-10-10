@@ -18,10 +18,12 @@ function getRepoContributors(repoOwner, repoName, cb) {
     }
   };
 
-//
+//print out avatar url
   request (options, function(err, response, body){
     var contributors = JSON.parse (body);
-    console.log(contributors);
+     contributors.forEach(function(item) {
+      console.log(item.avatar_url);
+    })
   })
 
 }
