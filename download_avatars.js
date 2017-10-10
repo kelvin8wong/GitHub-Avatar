@@ -14,14 +14,19 @@ function getRepoContributors(repoOwner, repoName, cb) {
   const options = {
     url: requestURL,
     headers: {
-    'User-Agent': 'GitHub Avatar Downloader - Student Project'
-  }
+      'User-Agent': 'GitHub Avatar Downloader - Student Project'
+    }
+  };
 
-  request(options, cb)
+//
+  request (options, function(err, response, body){
+    var contributors = JSON.parse (body);
+    console.log(contributors);
+  })
 
 }
 
 getRepoContributors("jquery", "jquery", function(err, result) {
   console.log("Errors:", err);
-  console.log("Result:", result);
+  console.log("Result:", avatar_url);
 });
