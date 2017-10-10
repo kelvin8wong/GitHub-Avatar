@@ -1,8 +1,10 @@
 var request = require('request');
 var fs = require('fs');
 
-//introductoion
-console.log('Welcome to the GitHub Avatar Downloader!');
+
+const repoOwner = process.argv[2];
+const repoName = process.argv[3];
+
 
 function getRepoContributors(repoOwner, repoName, cb) {
   var GITHUB_USER = "kelvin8wong";
@@ -31,11 +33,22 @@ function getRepoContributors(repoOwner, repoName, cb) {
 //implement downloadImage function
 function downloadImageByURL(url, filePath) {
   request.get(url)
+        .on('end', function () {
+          console.log('Download complete!')
+        })
        .pipe(fs.createWriteStream(filePath));
 }
 
+// make the required arguments
+if (process.argv.length !== 4) {
+  console.log("You must provide a repo owner and  name.");
+  console.log("Usage: node download_avatars.js <repoOwner> <repoName>");
 
-getRepoContributors("jquery", "jquery", function(err, result) {
+} else {
+  console.log(`Welcome to the Github Avatar Downloader!`);
+
+  getRepoContributors(repoOwner, repoName, function(err, result) {
   console.log("Errors:", err);
   console.log("Result:", result);
-});
+  });
+}
